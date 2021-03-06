@@ -25,7 +25,7 @@ pipeline {
         }
         stage("Docker build and push") {
           steps {
-            sh "docker build -t docker-registry:5000/calculator .
+            sh "docker build -t docker-registry:5000/calculator ."
             sh "docker push docker-registry:5000/calculator"
           }
         }
