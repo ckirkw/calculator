@@ -23,5 +23,16 @@ pipeline {
               waitForQualityGate abortPipeline: true
             }
         }
+        stage("Docker build and push") {
+          steps {
+            sh "docker build -t docker-registry:5000/calculator .
+            sh "docker push docker-registry:5000/calculator"
+          }
+        }
+        stage("Deploy to staging") {
+          steps {
+            sh "docker run  -d --rm -p 8765:8080 --name calculator docker-registry:5000/calculator"
+          }
+        }
     }
 }
