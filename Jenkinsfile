@@ -11,5 +11,17 @@ pipeline {
                 sh "mvn test"
             }
         }
+        stage("SonarQube analysis") {
+            steps {
+              withSonarQubeEnv("SonarQube") {
+                sh "mvn sonar:sonar"
+              }
+            }
+        }
+        stage("Quality gate") {
+            steps {
+              waitForQualityGate abortPipeline: true
+            }
+        }
     }
 }
